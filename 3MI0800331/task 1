@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+
+using namespace std;
+
+
+class ComponentBase {
+protected:
+	float x;
+	float y;
+public:
+	
+	virtual void showDialog() = 0;
+	void move(float dx, float dy) {
+		x += dx;
+		y += dy;
+	};
+
+	virtual ~ComponentBase() = default;
+};
+
+
+class Label: public ComponentBase {
+private:
+	static const int MAX_TEXT_LENGTH = 16;
+	char text[MAX_TEXT_LENGTH];
+public:
+	void showDialog() override {
+		cout << "Enter coordinates for x and y";
+		cin >> x >> y;
+		cout << "Input text with 16 characters";
+		cin.getline(text, MAX_TEXT_LENGTH);
+	}
+};
+
+class RadioButton:public ComponentBase {
+	static const int MAX_TEXT_LENGTH = 16;
+	char text[MAX_TEXT_LENGTH];
+	bool selected = false;
+public:
+	void flip() {
+		selected = !selected;
+	}
+	bool isOn()const {
+		return selected;
+	}
+	void showDialog() override {
+		cout << "Enter name with 16 characters max:";
+		cin.getline(text, MAX_TEXT_LENGTH);
+		cout << "Is the button selected? Type On or Off";
+		char selectedState[3];
+		cin.getline(selectedState,3);
+		if (selectedState == "On") {
+			selected = true;
+		}
+		else if (selectedState == "Off") {
+			selected = false;
+		}
+	}
+};
+
+class TextBox:ComponentBase {
+private:
+	char *text = new char[];
+public:
+	void showDialog() override {
+
+	}
+};
+
+int main() {
+
+}
